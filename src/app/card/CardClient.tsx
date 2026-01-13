@@ -35,71 +35,68 @@ export default function CardPage() {
   const downloadImage = async () => {
     if (!cardRef.current) return;
 
-    try {
-      const dataUrl = await htmlToImage.toPng(cardRef.current, {
-        pixelRatio: 2,
-        backgroundColor: "#ffffff",
-      });
+    const dataUrl = await htmlToImage.toPng(cardRef.current, {
+      pixelRatio: 2,
+      backgroundColor: "#ffffff",
+    });
 
-      const link = document.createElement("a");
-      link.download = `card-${name}.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch (error) {
-      console.error("Download failed", error);
-    }
+    const link = document.createElement("a");
+    link.download = `card-${name}.png`;
+    link.href = dataUrl;
+    link.click();
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f5f3ff] via-[#fafafa] to-[#eef2ff] px-4">
-      <div className="w-full max-w-md">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f5f3ff] via-[#fafafa] to-[#eef2ff] px-4 py-6">
+      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg">
         
         {/* КАРТОЧКА */}
         <div
           ref={cardRef}
-          className="relative rounded-2xl bg-white/90 backdrop-blur-md shadow-[0_20px_60px_rgba(99,102,241,0.15)] p-8"
+          className="relative rounded-2xl bg-white/90 backdrop-blur-md shadow-[0_20px_60px_rgba(99,102,241,0.15)]
+                     p-5 sm:p-7 md:p-8"
         >
           {/* Декоративный акцент */}
-          <div className="absolute -top-3 -right-3 w-20 h-20 rounded-full bg-indigo-100 blur-2xl" />
+          <div className="pointer-events-none absolute -top-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-indigo-100 blur-2xl" />
 
-          {/* ЛОГОТИП УНИВЕРСИТЕТА */}
-          <div className="mb-6 flex justify-center">
+          {/* ЛОГОТИП */}
+          <div className="mb-5 sm:mb-6 flex justify-center">
             <Image
               src="/university-logo.svg"
-              alt="University logo"
-              width={160}
-              height={100}
-              className="opacity-90"
+              alt="Cyber University logo"
+              width={140}
+              height={90}
+              className="opacity-90 sm:w-[160px]"
             />
           </div>
 
           {/* ПРИВЕТСТВИЕ */}
-          <h2 className="text-xl font-semibold text-gray-800 mb-3">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-3">
             Привет, <span className="text-indigo-600">{name}</span> 👋
           </h2>
 
-          {/* КОНТЕНТ */}
+          {/* ТЕКСТ */}
           {status === "loading" && (
-            <p className="text-gray-500 animate-pulse">
+            <p className="text-sm sm:text-base text-gray-500 animate-pulse">
               Подбираем тёплые слова…
             </p>
           )}
 
           {status === "success" && (
-            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line">
               {text}
             </p>
           )}
 
           {status === "error" && (
-            <p className="text-rose-500">
+            <p className="text-sm text-rose-500">
               Не удалось создать сообщение 🤍
             </p>
           )}
 
           {/* ПОДПИСЬ */}
           {status === "success" && (
-            <div className="mt-6 text-sm text-gray-500 text-right">
+            <div className="mt-6 text-xs sm:text-sm text-gray-500 text-right">
               С уважением,<br />
               <span className="font-medium text-gray-700">
                 Cyber University
@@ -108,11 +105,12 @@ export default function CardPage() {
           )}
         </div>
 
-        {/* КНОПКА СКАЧИВАНИЯ */}
+        {/* КНОПКА */}
         {status === "success" && (
           <button
             onClick={downloadImage}
-            className="mt-4 w-full rounded-xl bg-indigo-600 py-2 text-white hover:bg-indigo-700 transition"
+            className="mt-4 w-full rounded-xl bg-indigo-600 py-2.5 sm:py-3
+                       text-sm sm:text-base text-white hover:bg-indigo-700 transition"
           >
             Скачать как изображение
           </button>

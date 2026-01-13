@@ -14,23 +14,23 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f5f3ff] via-[#fafafa] to-[#eef2ff] px-4">
-      <div className="w-full max-w-sm rounded-2xl bg-white/80 backdrop-blur-md shadow-[0_20px_60px_rgba(99,102,241,0.15)] p-8">
+      <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg rounded-2xl bg-white/80 backdrop-blur-md shadow-[0_20px_60px_rgba(99,102,241,0.15)] p-6 sm:p-8">
         
-        {/* Акцент */}
-        <div className="absolute -top-3 -right-3 w-20 h-20 rounded-full bg-indigo-100 blur-2xl" />
+        {/* Декоративный акцент */}
+        <div className="pointer-events-none absolute -top-4 -right-4 w-24 h-24 rounded-full bg-indigo-100 blur-2xl sm:w-28 sm:h-28" />
 
-        <h1 className="text-2xl font-semibold text-gray-800 text-center mb-2">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-3">
           Персональная открытка ✨
         </h1>
 
-        <p className="text-sm text-gray-500 text-center mb-6">
-         Привет это Cyber University 
-         У нас есть желание для тебя введи своё имя 
-         и получи персональную открытку
+        <p className="text-sm sm:text-base text-gray-500 text-center mb-6 leading-relaxed">
+          Привет, это <span className="font-medium text-gray-700">Cyber University</span>.
+          <br className="hidden sm:block" />
+          Введите своё имя и получите персональное поздравление.
         </p>
 
         <input
-          className="w-full rounded-xl border border-gray-200 px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
+          className="w-full rounded-xl border border-gray-200 px-4 py-2 sm:py-3 text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
           placeholder="Введите имя"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -38,12 +38,12 @@ export default function HomePage() {
 
         <button
           onClick={handleSubmit}
-          className="mt-4 w-full rounded-xl bg-indigo-600 py-2 text-white hover:bg-indigo-700 transition"
+          className="mt-4 w-full rounded-xl bg-indigo-600 py-2.5 sm:py-3 text-white text-sm sm:text-base hover:bg-indigo-700 transition"
         >
-          Посмотреть желание
+          Посмотреть поздравление
         </button>
 
-        <div className="mt-6 text-xs text-gray-400 text-center">
+        <div className="mt-6 text-xs sm:text-sm text-gray-400 text-center">
           Made by Umidjon
         </div>
       </div>
