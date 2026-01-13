@@ -7,7 +7,7 @@ import Image from "next/image";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export default function CardClient() {
+export default function CardPage() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Друг";
 
@@ -35,39 +35,50 @@ export default function CardClient() {
   const downloadImage = async () => {
     if (!cardRef.current) return;
 
-    const dataUrl = await htmlToImage.toPng(cardRef.current, {
-      pixelRatio: 2,
-      backgroundColor: "#ffffff",
-    });
+    try {
+      const dataUrl = await htmlToImage.toPng(cardRef.current, {
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+      });
 
-    const link = document.createElement("a");
-    link.download = `card-${name}.png`;
-    link.href = dataUrl;
-    link.click();
+      const link = document.createElement("a");
+      link.download = `card-${name}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (error) {
+      console.error("Download failed", error);
+    }
   };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f5f3ff] via-[#fafafa] to-[#eef2ff] px-4">
       <div className="w-full max-w-md">
+        
+        {/* КАРТОЧКА */}
         <div
           ref={cardRef}
           className="relative rounded-2xl bg-white/90 backdrop-blur-md shadow-[0_20px_60px_rgba(99,102,241,0.15)] p-8"
         >
+          {/* Декоративный акцент */}
           <div className="absolute -top-3 -right-3 w-20 h-20 rounded-full bg-indigo-100 blur-2xl" />
 
+          {/* ЛОГОТИП УНИВЕРСИТЕТА */}
           <div className="mb-6 flex justify-center">
             <Image
-              src="/university-logo.png"
+              src="/university-logo.svg"
               alt="University logo"
-              width={80}
-              height={80}
+              width={160}
+              height={100}
+              className="opacity-90"
             />
           </div>
 
+          {/* ПРИВЕТСТВИЕ */}
           <h2 className="text-xl font-semibold text-gray-800 mb-3">
             Привет, <span className="text-indigo-600">{name}</span> 👋
           </h2>
 
+          {/* КОНТЕНТ */}
           {status === "loading" && (
             <p className="text-gray-500 animate-pulse">
               Подбираем тёплые слова…
@@ -86,16 +97,18 @@ export default function CardClient() {
             </p>
           )}
 
+          {/* ПОДПИСЬ */}
           {status === "success" && (
             <div className="mt-6 text-sm text-gray-500 text-right">
               С уважением,<br />
               <span className="font-medium text-gray-700">
-                Название университета
+                Cyber University
               </span>
             </div>
           )}
         </div>
 
+        {/* КНОПКА СКАЧИВАНИЯ */}
         {status === "success" && (
           <button
             onClick={downloadImage}
